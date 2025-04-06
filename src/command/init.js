@@ -20,7 +20,7 @@ module.exports.package = function package() {
         else if (description == undefined) throw `Missing <description>`;
         else if (pack_data == undefined) throw `Missing <pack_data>`;
         else if (pack_version == undefined) throw `Missing <version>`;
-        else if (isNaN(pack_format)) throw `"${pack_format}" it's not a number`;
+        else if (isNaN(pack_format)) throw `"${pack_format}" it's not a numbers`;
     } catch (expection) {
         console.log(expection)
     }
