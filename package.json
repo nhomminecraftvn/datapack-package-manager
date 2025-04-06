@@ -1,0 +1,15 @@
+{
+  "name": "datapack-package-manager",
+  "version": "1.0.1",
+  "engines": {"node": ">=20.0.0", "npm": ">=9.0.0"},
+  "bin": {
+    "dppm": "./bin/dppm"
+  },
+  "keywords": ["minecraft","datapack"],
+  "author": "",
+  "license": "Apache-2.0",
+  "type": "commonjs",
+  "dependencies": {
+    "chalk": "^5.4.1"
+  }
+}
