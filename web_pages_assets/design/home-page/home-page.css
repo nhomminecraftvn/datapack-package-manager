@@ -8,8 +8,23 @@
 }
 
 #home .install-box {
+    border-radius: .5em;
+    margin-top: 3em;
     padding: 10px 10px;
     color: white;
     background-color: black;
-    border-radius: .5em;
+}
+
+.info-box {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5em;
+    max-width: 968px;
+}
+
+.info-box h1 {
+    font-family: "MI SANS";
+    font-size: 3em;
+    font-weight: 700;
 }

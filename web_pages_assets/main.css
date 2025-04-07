@@ -11,6 +11,10 @@
     font-family: 'Fira Sans';
 }
 
+html {
+    touch-action: none;
+}
+
 :root {
     --background: hsl(230,100%,97%);
     --text-color: hsl(230,100%,10%);
@@ -46,6 +50,7 @@ ul {
 }
 
 nav ul a {
+    user-select: none;
     color: var(--text-color);
     opacity: .7;
     transition: 200ms ease-in-out;
@@ -56,6 +61,7 @@ nav ul a:hover {
 }
 
 .nav-logo {
+    user-select: none;
     font-size: 1.5em;
     font-family: "Mi Sans";
     color: var(--text-color);
@@ -69,7 +75,7 @@ nav ul a:hover {
 }
 
 .btn {
-    font-family: 'Inter';
+    font-family: "Inter";
     padding: .5rem 1rem;
     color: white;
     border-radius: .5em;
