@@ -89,7 +89,8 @@ var package = {
                 fs.writeFileSync(`${pack_name}/data/${pack_data}/functions/${function_name}.mcfunction`, "", {flag: "w+"})
             }
         } catch (expection) {
-            throw cliError.addFunctionError(pack_name)
+            console.log(`Add Function failed with error: ${expection.message}`)
+            throw cliError.addFunctionError(pack_name);
         }
     }
 
@@ -104,7 +105,8 @@ var package = {
                 fs.writeFileSync(`${pack_name}/data/${pack_data}/function/${function_name}.mcfunction`, "", {flag: "w+"})
             }
         } catch (expection) {
-            throw cliError.addFunctionError(pack_name)
+            console.log(`Add Function failed with error: ${expection.message}`)
+            throw cliError.addFunctionError(pack_name);
         }
     }
 
