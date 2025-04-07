@@ -1,0 +1,106 @@
+@import url("./fonts/font.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.css");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    list-style: none;
+    scroll-behavior: smooth;
+    font-family: 'Fira Sans';
+}
+
+:root {
+    --background: hsl(230,100%,97%);
+    --text-color: hsl(230,100%,10%);
+    --btn-color: #015ace;
+    --btn-color-hover: #0068f0;
+}
+
+code {
+    font-family: "Fira Code";
+}
+
+body {
+    min-height: 100vh;
+    background-color: var(--background);
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 1rem 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(5px);
+    z-index: 1000;
+}
+
+ul {
+    display: flex;
+    align-items: center;
+    gap: 3em;
+}
+
+nav ul a {
+    color: var(--text-color);
+    opacity: .7;
+    transition: 200ms ease-in-out;
+}
+
+nav ul a:hover {
+    opacity: 1;
+}
+
+.nav-logo {
+    font-size: 1.5em;
+    font-family: "Mi Sans";
+    color: var(--text-color);
+    font-weight: 600;
+    opacity: .7;
+    transition: 200ms ease-in-out;
+}
+
+.nav-logo:hover {
+    opacity: 1;
+}
+
+.btn {
+    font-family: 'Inter';
+    padding: .5rem 1rem;
+    color: white;
+    border-radius: .5em;
+    font-size: 1rem;
+    background-color: var(--btn-color);
+    cursor: pointer;
+    transition: 300ms ease-in-out;
+}
+
+.btn:hover {
+    box-shadow: 0 0 8px 1px var(--btn-color);
+    background-color: var(--btn-color-hover);
+    color: var(--background);
+}
+
+span {
+    background: linear-gradient(to right #00146e, #015ace);
+    background-clip: text;
+}
+
+#menu {
+    color: var(--text-color);
+    font-size: 1em;
+    display: none;
+}
+
+.span-text {
+    font-family: "mi sans";
+}
+
+section {
+    min-height: 100vh;
+    padding: 5% 5%;
+}

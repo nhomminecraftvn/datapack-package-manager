@@ -1,0 +1,55 @@
+@font-face {
+    font-family: 'Cascadia Code';
+    src: url("CascadiaCode-Light.ttf");
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cascadia Code';
+    src: url("CascadiaCode-LightItalic.ttf");
+    font-weight: 300;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Cascadia Code';
+    src: url("CascadiaCode-Regular.ttf");
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cascadia Code';
+    src: url("CascadiaCode-Italic.ttf");
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Cascadia Code';
+    src: url("CascadiaCode-SemiBold.ttf");
+    font-weight: 500, 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cascadia Code';
+    src: url("CascadiaCode-SemiBoldItalic.ttf");
+    font-weight: 500, 600;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Cascadia Code';
+    src: url("CascadiaCode-Bold.ttf");
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Cascadia Code';
+    src: url("CascadiaCode-BoldItalic.ttf");
+    font-weight: 700;
+    font-style: italic;
+}

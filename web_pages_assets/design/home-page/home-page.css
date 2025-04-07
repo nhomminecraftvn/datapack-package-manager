@@ -1,0 +1,15 @@
+#home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2em;
+    color: var(--text-color);
+}
+
+#home .install-box {
+    padding: 10px 10px;
+    color: white;
+    background-color: black;
+    border-radius: .5em;
+}
