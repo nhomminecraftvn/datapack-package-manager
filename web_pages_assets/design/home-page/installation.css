@@ -1,0 +1,60 @@
+#installation {
+    background-color: var(--background);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5em;
+}
+
+#installation i.ri-install-line {
+    color: var(--text-color);
+    font-size: 30vw;
+    opacity: .05;
+}
+
+.install-box {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    gap: 2em;
+}
+
+.install-box h1 {
+    font-size: 4em;
+}
+
+.install-box p {
+    color: var(--text-color);
+    opacity: .8;
+}
+
+.install-package {
+    display: flex;
+    text-align: left;
+    gap: 10em;
+}
+
+.install-package ul {
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    color: var(--text-color);
+    opacity: .8;
+    align-items: baseline;
+}
+
+.install-package ul li span {
+    display: flex;
+    align-items: center;
+    gap: .5em;
+    font-size: 1.3em;
+    transition: 300ms ease-in-out;
+}
+
+.install-package ul li i {
+    font-size: 1.2em;
+}
+
+.install-box h2 {
+    font-size: 2em;
+}

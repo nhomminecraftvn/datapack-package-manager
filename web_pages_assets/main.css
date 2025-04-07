@@ -19,8 +19,28 @@
     --btn-color-hover: #0068f0;
 }
 
+:root .dark-mode  {
+    --background: hsl(230,100%,5%);
+    --text-color: hsl(230,100%,90%);
+    --btn-color: #015ace;
+    --btn-color-hover: #0068f0;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    background-color: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #015ace, #00146e);
+}
+
 code {
     font-family: "Fira Code";
+}
+
+body.dark-mode {
+    transition: all 400ms ease-in-out;
 }
 
 body {
@@ -85,12 +105,12 @@ nav ul a:hover {
 .btn:hover {
     box-shadow: 0 0 8px 1px var(--btn-color);
     background-color: var(--btn-color-hover);
-    color: var(--background);
 }
 
-span {
-    background: linear-gradient(to right #00146e, #015ace);
+span.text-color {
+    background: linear-gradient(60deg, #015ace, #00146e);
     background-clip: text;
+    color: transparent;
 }
 
 #menu {

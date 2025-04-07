@@ -28,3 +28,18 @@
     font-size: 3em;
     font-weight: 700;
 }
+
+.info-box h3 {
+    font-family: "MI SANS";
+    font-size: 1.5em;
+    font-weight: 500;
+}
+
+.info-box p {
+    opacity: .7;
+}
+
+.btn-box {
+    display: flex;
+    gap: .5em;
+}
