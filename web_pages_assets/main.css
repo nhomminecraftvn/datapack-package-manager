@@ -43,7 +43,6 @@ body.dark-mode {
 }
 
 body {
-    touch-action: none;
     min-height: 100vh;
     background-color: var(--background);
 }
