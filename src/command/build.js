@@ -1,23 +1,17 @@
 const fs = require("fs");
 const { updated_at } = require('../parameter/date');
 
-module.exports.runPackageBuild = function runPackageBuild(pack_name, version) {
-    var jsonTemplate = `{
-  "build": {
-    "latest_build": "${updated_at}",
-    "version": "${version}"
-  }
-}`
+const Argv = require('../utils/argv');
+const CommandLibrary = require('../utils/commandLib');
+const argv = new Argv();
+var cmdLib = new CommandLibrary();
 
-    try {
-        if (fs.readdirSync(`${pack_name}/`) && fs.readFileSync(`${pack_name}/dppm_package.js`)) {
-          fs.writeFileSync(`${pack_name}/` + "dppm_build.json", jsonTemplate, {flags: "w+",});
+module.exports.runPackageBuild = function runPackageBuild() {
+    const pack_name = argv.slice(3),
+        pack_version = argv.slice(4);
 
-            console.log("Build Completed:");
-            return true;
-        }
-    } catch (err) {
-        console.log(`no dppm_package.js found on package: ${pack_name}, build failed`);
-        return false;
-    }
+    if (pack_name && pack_version) {
+      cmdLib.buildCommand(pack_name, pack_version);
+    } else if (pack_name == undefined) throw `Missing <pack_name>`;
+      else if (pack_version == undefined) throw `Missing <pack_version>`;
 };

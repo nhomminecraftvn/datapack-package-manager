@@ -6,7 +6,7 @@ const cliError = new CliError();
 
 module.exports = class CommandLibrary {
     // require constructor
-    constructor() {}
+    constructor() { }
 
     /**
      * @since v1.0.1
@@ -44,33 +44,33 @@ var package = {
 
         if (pack_format > 3) {
             fs.mkdirSync(pack_name);
-            fs.writeFileSync(`${pack_name}/` + "pack.mcmeta", mcmetaTemplate, {flags: "w+"});
-            fs.writeFileSync(`${pack_name}/` + "dppm_package.js", jsPackStats, {flags: "w+"});
+            fs.writeFileSync(`${pack_name}/` + "pack.mcmeta", mcmetaTemplate, { flags: "w+" });
+            fs.writeFileSync(`${pack_name}/` + "dppm_package.js", jsPackStats, { flags: "w+" });
 
             fs.mkdirSync(`${pack_name}/data`);
             fs.mkdirSync(`${pack_name}/data/minecraft`);
             fs.mkdirSync(`${pack_name}/data/minecraft/tags`);
-            
+
             fs.mkdirSync(`${pack_name}/data/${pack_data}`);
 
             if (pack_formatRange >= 4 && pack_formatRange <= 48) {
                 fs.mkdirSync(`${pack_name}/data/minecraft/tags/functions`);
                 fs.mkdirSync(`${pack_name}/data/${pack_data}/functions`);
 
-                fs.writeFileSync(`${pack_name}/data/minecraft/tags/functions/load.json`, jsonLoadTemplate, {flag: "w+"});
-                fs.writeFileSync(`${pack_name}/data/minecraft/tags/functions/tick.json`, jsonTickTemplate, {flag: "w+"});
+                fs.writeFileSync(`${pack_name}/data/minecraft/tags/functions/load.json`, jsonLoadTemplate, { flag: "w+" });
+                fs.writeFileSync(`${pack_name}/data/minecraft/tags/functions/tick.json`, jsonTickTemplate, { flag: "w+" });
 
-                fs.writeFileSync(`${pack_name}/data/${pack_data}/functions/reload.mcfunction`, "", {flag: "w+"});
-                fs.writeFileSync(`${pack_name}/data/${pack_data}/functions/repeat.mcfunction`, "", {flag: "w+"});
+                fs.writeFileSync(`${pack_name}/data/${pack_data}/functions/reload.mcfunction`, "", { flag: "w+" });
+                fs.writeFileSync(`${pack_name}/data/${pack_data}/functions/repeat.mcfunction`, "", { flag: "w+" });
             } else if (pack_formatRange >= 49) {
                 fs.mkdirSync(`${pack_name}/data/minecraft/tags/function`);
                 fs.mkdirSync(`${pack_name}/data/${pack_data}/function`);
 
-                fs.writeFileSync(`${pack_name}/data/minecraft/tags/function/load.json`, jsonLoadTemplate, {flag: "w+"});
-                fs.writeFileSync(`${pack_name}/data/minecraft/tags/function/tick.json`, jsonTickTemplate, {flag: "w+"});
+                fs.writeFileSync(`${pack_name}/data/minecraft/tags/function/load.json`, jsonLoadTemplate, { flag: "w+" });
+                fs.writeFileSync(`${pack_name}/data/minecraft/tags/function/tick.json`, jsonTickTemplate, { flag: "w+" });
 
-                fs.writeFileSync(`${pack_name}/data/${pack_data}/function/reload.mcfunction`, "", {flag: "w+"});
-                fs.writeFileSync(`${pack_name}/data/${pack_data}/function/repeat.mcfunction`, "", {flags: "w+"});
+                fs.writeFileSync(`${pack_name}/data/${pack_data}/function/reload.mcfunction`, "", { flag: "w+" });
+                fs.writeFileSync(`${pack_name}/data/${pack_data}/function/repeat.mcfunction`, "", { flags: "w+" });
             }
         } else {
             // not supported for Minecraft 1.12.2 if pack_format less than 4.
@@ -85,12 +85,14 @@ var package = {
      */
     addFunctions(pack_name, pack_data, function_name) {
         try {
-            if (fs.readdirSync(`${pack_name}/data/${pack_data}/functions`)) {
-                fs.writeFileSync(`${pack_name}/data/${pack_data}/functions/${function_name}.mcfunction`, "", {flag: "w+"})
+            if (fs.readdirSync(`${pack_name}`)) {
+                if (fs.readdirSync(`${pack_name}/data/${pack_data}/functions`)) {
+                    fs.writeFileSync(`${pack_name}/data/${pack_data}/functions/${function_name}.mcfunction`, "", { flag: "w+" })
+                }
             }
         } catch (expection) {
-            console.log(`Add Function failed with error: ${expection.message}`)
-            throw cliError.addFunctionError(pack_name);
+            // console.log(`Add Function failed with error: ${expection.message}`)
+            throw cliError.addFunctionError(pack_name, expection.message);
         }
     }
 
@@ -101,18 +103,48 @@ var package = {
      */
     addFunction(pack_name, pack_data, function_name) {
         try {
-            if (fs.readdirSync(`${pack_name}/data/${pack_data}/function`)) {
-                fs.writeFileSync(`${pack_name}/data/${pack_data}/function/${function_name}.mcfunction`, "", {flag: "w+"})
+            if (fs.readdirSync(`${pack_name}`)) {
+                if (fs.readdirSync(`${pack_name}/data/${pack_data}/function`)) {
+                    fs.writeFileSync(`${pack_name}/data/${pack_data}/function/${function_name}.mcfunction`, "", { flag: "w+" })
+                }
             }
         } catch (expection) {
             console.log(`Add Function failed with error: ${expection.message}`)
-            throw cliError.addFunctionError(pack_name);
+            throw cliError.addFunctionError(pack_name, expection.message);
         }
     }
 
-
-    buildCommand() {
+    /**
+     * @since v1.0.1
+     * 
+     * Build a Datapacks
+     */
+    buildCommand(pack_name, version) {
+            var jsonTemplate = `{
+    "build": {
+        "latest_build": "${updated_at}",
+        "version": "${version}"
+    }
+}`
+        try {
+            if (fs.readdirSync(`${pack_name}/`) && fs.readFileSync(`${pack_name}/dppm_package.js`)) {
+                fs.writeFileSync(`${pack_name}/` + "dppm_build.json", jsonTemplate, { flags: "w+", });
+                console.log("Build Completed");
+                return true;
+            }
+        } catch (expection) {
+            console.log(`no dppm_package.js found on package: ${pack_name}, build failed`);
+            return false;
+        }
 
     }
 
+    removePackage(pack_name) {
+        try {
+            if (fs.readdirSync(`${pack_name}`)) {
+                if (fs.readFileSync(`${pack_name}/dppm_package.js`)) fs.unlinkSync(`${pack_name}/dppm_package.js`); 
+                else if (fs.readFileSync(`${pack_name}/dppm_build.json`)) fs.unlinkSync(`${pack_name}/dppm_build.json`);
+            }
+        } catch (expection) {}
+    }
 }
