@@ -17,7 +17,7 @@ module.exports = function CLI() {
         } else if (type) {
             print(help.list());
         }
-    } catch(expection) {
+    } catch (expection) {
         console.log(expection);
     }
 }
