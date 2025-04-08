@@ -5,7 +5,7 @@ const CommandLibrary = require('../utils/commandLib');
 const argv = new Argv();
 var cmdLib = new CommandLibrary();
 
-module.exports.package = function package() {
+module.exports = function init() {
     const pack_name = argv.slice(3),
         pack_format = argv.slice(4),
         description = argv.slice(5),

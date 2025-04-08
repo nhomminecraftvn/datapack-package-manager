@@ -1,33 +1,39 @@
-const { helpCmd } = require('../parameter/cmd_list');
+const { help_list } = require('../parameter/help_list');
+const help_doc = require('../parameter/help_doc');
 const CliError = require('../utils/error');
+const print = require('../utils/print')
 const Argv = require('../utils/argv');
 const argv = new Argv();
 const cliError = new CliError();
 
-module.exports.help = class help {
-    static index() {
+var helpList = `init, add-function, build`
+
+module.exports = function help() {
+    function index() {
         var helpArg = argv.slice(2), 
             index = argv.slice(3);
 
         try {
             if (helpArg && index) {
                 switch (index) {
-                    case helpCmd.init: console.log('ok'); break;
+                    case help_list.init: print(help_doc.init); break;
                     default: throw cliError.indexNotFound(index);
                 }
             } else if (helpArg) {
-                console.log(this.list());
+                console.log(list());
             }
         } catch (expection) {
             console.log(expection);
         }
     }
 
-    static list() {
-        return 'init, add-function, build';
+    function list() {
+        return helpList;
     }
 
-    static indexNotFound(index) {
-        return `Unknown Index: ${index}`;
-    }
+    index();
+}
+
+module.exports.dppmCommandHelp = function dppmCommandHelp() {
+    return helpList;
 }

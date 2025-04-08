@@ -5,7 +5,7 @@ const CommandLibrary = require('../utils/commandLib');
 const argv = new Argv();
 var cmdLib = new CommandLibrary();
 
-module.exports.removePackagePackage = function removePackage() {
+module.exports = function remove() {
     const pack_name = argv.slice(3)
 
     try {

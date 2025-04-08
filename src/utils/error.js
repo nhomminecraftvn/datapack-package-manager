@@ -36,4 +36,10 @@ module.exports = class CliError {
         return textColor.red(textColor.bold(`${this.errClassName}.${errId}:`), textColor.white(`${errMessage} with error code ${errCode}\nwhat error: ${textColor.yellow(fsError)}\n\ndppm v${version}`));
     }
 
+    removeError(data, fsError) {
+        var errId = "removeError";
+        var errMessage = "Cannot remove"
+        var errCode = 5;
+        return textColor.red(textColor.bold(`${this.errClassName}.${errId}:`), textColor.white(`${errMessage} "${data}" with error code ${errCode}\nwhat error: ${textColor.yellow(fsError)}\n\ndppm v${version}`));
+    }
 }

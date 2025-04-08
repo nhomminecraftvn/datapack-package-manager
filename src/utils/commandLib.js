@@ -1,6 +1,7 @@
 const fs = require("fs");
 
 const { created_at, updated_at } = require('../parameter/date');
+const print = require('./print');
 const CliError = require('./error');
 const cliError = new CliError();
 
@@ -11,7 +12,7 @@ module.exports = class CommandLibrary {
     /**
      * @since v1.0.1
      * 
-     * Initialize a Package using: ``dppm init <1-6 args>``
+     * Initialize a Package
      */
     initializePackage(pack_name, pack_format, description, pack_data, author, version) {
         const mcmetaTemplate = `{"pack":{"pack_format":${pack_format},"description":"${description}"}}`;
@@ -139,12 +140,19 @@ var package = {
 
     }
 
+    /**
+     * @since v1.0.1
+     * 
+     * Remove a package
+     */
     removePackage(pack_name) {
         try {
             if (fs.readdirSync(`${pack_name}`)) {
                 if (fs.readFileSync(`${pack_name}/dppm_package.js`)) fs.unlinkSync(`${pack_name}/dppm_package.js`); 
                 else if (fs.readFileSync(`${pack_name}/dppm_build.json`)) fs.unlinkSync(`${pack_name}/dppm_build.json`);
             }
-        } catch (expection) {}
+        } catch (expection) {
+            print(cliError.removeError(pack_name, expection.message))
+        }
     }
 }
