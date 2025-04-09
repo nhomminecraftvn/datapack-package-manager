@@ -1,5 +1,5 @@
-//@ts-check
 const fs = require("fs");
+const path = require("path");
 
 const { dppmTemplates } = require('../parameter/template/importTemplate');
 const { created_at, updated_at } = require('../parameter/date');
@@ -136,12 +136,28 @@ module.exports = class CommandLibrary {
 
     /**
      * @since v1.0.1
+     * 
+     * Install a Package
      */
-    installPackage(pack_name) {
+    installPackage(pack_name, dest) {
+        const exist = fs.existsSync(pack_name);
+        const stats = exist && fs.statSync(pack_name);
+        const isDir = stats && stats.isDirectory();
+        
         try {
+            if (isDir) {
+                if (!fs.existsSync(dest)) fs.mkdirSync(dest);
+    
+                fs.readdirSync(pack_name).forEach(childItemName => {
+                    this.installPackage(path.join(pack_name, childItemName), path.join(dest, childItemName));
+                })
+            } else {
+                if (!fs.existsSync(dest)) fs.copyFileSync(pack_name, dest);
+            }
 
+            print("Must be reload Datapack in your Minecraft world.")
         } catch (expection) {
-
-        }
+            console.log(expection.message);
+        } 
     }
 }
