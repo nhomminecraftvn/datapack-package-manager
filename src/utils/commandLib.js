@@ -1,5 +1,7 @@
+//@ts-check
 const fs = require("fs");
 
+const { dppmTemplates } = require('../parameter/template/importTemplate');
 const { created_at, updated_at } = require('../parameter/date');
 const print = require('./print');
 const CliError = require('./error');
@@ -17,36 +19,16 @@ module.exports = class CommandLibrary {
     initializePackage(pack_name, pack_format, description, pack_data, author, version) {
         const mcmetaTemplate = `{"pack":{"pack_format":${pack_format},"description":"${description}"}}`;
 
-        const jsPackStats = `// This package information configure in package: ${pack_name}.
-var package = {
-    pack_name: "${pack_name}",
-    pack_format: ${pack_format},
-    pack_description: "${description}",
-    pack_author: "${author}",
-    pack_version: "${version}",
-    created_at: "${created_at}",
-}`;
-
-        const jsonLoadTemplate = `{
-    "replace": false,
-    "values": [
-        "${pack_data}:reload"
-    ]
-}`;
-
-        const jsonTickTemplate = `{
-    "replace": false,
-    "values": [
-        "${pack_data}:repeat"
-    ]
-}`
+        const jsPackStats = dppmTemplates.jsPackStats(pack_name, pack_format, description, author, version, created_at);
+        const jsonLoadTemplate = dppmTemplates.jsonLoadTemplate(pack_data);
+        const jsonTickTemplate = dppmTemplates.jsonTickTemplate(pack_data);
 
         var pack_formatRange = pack_format;
 
         if (pack_format > 3) {
             fs.mkdirSync(pack_name);
-            fs.writeFileSync(`${pack_name}/` + "pack.mcmeta", mcmetaTemplate, { flags: "w+" });
-            fs.writeFileSync(`${pack_name}/` + "dppm_package.js", jsPackStats, { flags: "w+" });
+            fs.writeFileSync(`${pack_name}/` + "pack.mcmeta", mcmetaTemplate);
+            fs.writeFileSync(`${pack_name}/` + "dppm_package.js", jsPackStats);
 
             fs.mkdirSync(`${pack_name}/data`);
             fs.mkdirSync(`${pack_name}/data/minecraft`);
@@ -58,20 +40,20 @@ var package = {
                 fs.mkdirSync(`${pack_name}/data/minecraft/tags/functions`);
                 fs.mkdirSync(`${pack_name}/data/${pack_data}/functions`);
 
-                fs.writeFileSync(`${pack_name}/data/minecraft/tags/functions/load.json`, jsonLoadTemplate, { flag: "w+" });
-                fs.writeFileSync(`${pack_name}/data/minecraft/tags/functions/tick.json`, jsonTickTemplate, { flag: "w+" });
+                fs.writeFileSync(`${pack_name}/data/minecraft/tags/functions/load.json`, jsonLoadTemplate);
+                fs.writeFileSync(`${pack_name}/data/minecraft/tags/functions/tick.json`, jsonTickTemplate);
 
-                fs.writeFileSync(`${pack_name}/data/${pack_data}/functions/reload.mcfunction`, "", { flag: "w+" });
-                fs.writeFileSync(`${pack_name}/data/${pack_data}/functions/repeat.mcfunction`, "", { flag: "w+" });
+                fs.writeFileSync(`${pack_name}/data/${pack_data}/functions/reload.mcfunction`, "");
+                fs.writeFileSync(`${pack_name}/data/${pack_data}/functions/repeat.mcfunction`, "");
             } else if (pack_formatRange >= 49) {
                 fs.mkdirSync(`${pack_name}/data/minecraft/tags/function`);
                 fs.mkdirSync(`${pack_name}/data/${pack_data}/function`);
 
-                fs.writeFileSync(`${pack_name}/data/minecraft/tags/function/load.json`, jsonLoadTemplate, { flag: "w+" });
-                fs.writeFileSync(`${pack_name}/data/minecraft/tags/function/tick.json`, jsonTickTemplate, { flag: "w+" });
+                fs.writeFileSync(`${pack_name}/data/minecraft/tags/function/load.json`, jsonLoadTemplate);
+                fs.writeFileSync(`${pack_name}/data/minecraft/tags/function/tick.json`, jsonTickTemplate);
 
-                fs.writeFileSync(`${pack_name}/data/${pack_data}/function/reload.mcfunction`, "", { flag: "w+" });
-                fs.writeFileSync(`${pack_name}/data/${pack_data}/function/repeat.mcfunction`, "", { flags: "w+" });
+                fs.writeFileSync(`${pack_name}/data/${pack_data}/function/reload.mcfunction`, "");
+                fs.writeFileSync(`${pack_name}/data/${pack_data}/function/repeat.mcfunction`, "");
             }
         } else {
             // not supported for Minecraft 1.12.2 if pack_format less than 4.
@@ -121,15 +103,11 @@ var package = {
      * Build a Datapacks
      */
     buildCommand(pack_name, version) {
-            var jsonTemplate = `{
-    "build": {
-        "latest_build": "${updated_at}",
-        "version": "${version}"
-    }
-}`
+        var jsonTemplate = dppmTemplates.buildJsonTemplate(pack_name, version);
+        
         try {
             if (fs.readdirSync(`${pack_name}/`) && fs.readFileSync(`${pack_name}/dppm_package.js`)) {
-                fs.writeFileSync(`${pack_name}/` + "dppm_build.json", jsonTemplate, { flags: "w+", });
+                fs.writeFileSync(`${pack_name}/` + "dppm_build.json", jsonTemplate);
                 console.log("Build Completed");
                 return true;
             }
@@ -153,6 +131,17 @@ var package = {
             }
         } catch (expection) {
             print(cliError.removeError(pack_name, expection.message))
+        }
+    }
+
+    /**
+     * @since v1.0.1
+     */
+    installPackage(pack_name) {
+        try {
+
+        } catch (expection) {
+
         }
     }
 }
